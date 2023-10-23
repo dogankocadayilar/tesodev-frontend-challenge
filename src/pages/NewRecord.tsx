@@ -10,7 +10,6 @@ import Button from "../components/Button";
 import ErrorCard from "../components/ErrorCard";
 
 const lsSearch = localStorage.getItem("search");
-const lsRecords = localStorage.getItem("records");
 
 function NewRecord() {
   const search = lsSearch ? JSON.parse(lsSearch) : { q: "", order: "nasc" };
@@ -41,43 +40,38 @@ function NewRecord() {
     setformErrors(errors);
 
     if (errors.every((value) => value === null)) {
+      const lsRecords = localStorage.getItem("records") || "[]";
+
       // Set submit button state to disabled while generating short url from website
       setisDisabled(true);
 
-      axios
-        .get(`https://tinyurl.com/api-create.php?url=${formValues.website}`)
-        .then((response) => {
-          // Saving new record to local storage after trying to shorten website url
-          const newRecord = {
-            ...formValues,
-            website: response.data || formValues.website,
-            id: nanoid(),
-            phone: "",
-            company: "",
-          };
+      const records = JSON.parse(lsRecords);
 
-          // Check local storage of records is exist if exist add new record to it if not create with new record
-          if (lsRecords) {
-            const records = JSON.parse(lsRecords);
+      const isExists = records.find(
+        (record: { [key: string]: string }) => record.email === formValues.email
+      );
 
-            // Check if new record exists
-            const isExists = records.find(
-              (record: { [key: string]: string }) =>
-                record.email === formValues.email
+      if (!isExists) {
+        axios
+          .get(`https://tinyurl.com/api-create.php?url=${formValues.website}`)
+          .then((response) => {
+            // Saving new record to local storage after trying to shorten website url
+            const newRecord = {
+              ...formValues,
+              website: response.data || formValues.website,
+              id: nanoid(),
+              phone: "",
+              company: "",
+            };
+
+            localStorage.setItem(
+              "records",
+              JSON.stringify([...records, newRecord])
             );
-
-            if (!isExists) {
-              localStorage.setItem(
-                "records",
-                JSON.stringify([...records, newRecord])
-              );
-            }
-          } else {
-            localStorage.setItem("records", JSON.stringify([newRecord]));
-          }
-        })
-        .catch((error) => console.log(error))
-        .finally(() => setisDisabled(false));
+          })
+          .catch((error) => console.log(error))
+          .finally(() => setisDisabled(false));
+      }
     }
   };
 
