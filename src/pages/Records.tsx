@@ -22,6 +22,8 @@ function Records() {
   const searchRef = useRef<HTMLInputElement>(null);
   const order = searchParams.get("order") || "nasc";
 
+  localStorage.setItem("search", JSON.stringify({ q: q, order: order }));
+
   // Filtered records
   const fr = useMemo(() => getFilteredRecords(q, order), [q, order]);
 

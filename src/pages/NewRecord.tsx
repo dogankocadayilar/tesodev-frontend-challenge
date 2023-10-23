@@ -9,9 +9,8 @@ import Input from "../components/Input";
 import Button from "../components/Button";
 import ErrorCard from "../components/ErrorCard";
 
-const lsSearch = localStorage.getItem("search");
-
 function NewRecord() {
+  const lsSearch = localStorage.getItem("search");
   const search = lsSearch ? JSON.parse(lsSearch) : { q: "", order: "nasc" };
 
   const initialFormValues: { [key: string]: string } = {
