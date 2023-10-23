@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.leaflet-container {
+  @apply h-[220px];
+}
+
+.errorMessage {
+  display: none;
+}
+
+.formInput:invalid[focused="true"] {
+  @apply border-red-500;
+}
+
+.inputLabel:has(~ .formInput:invalid[focused="true"]) {
+  @apply text-red-500;
+}
+
+.formInput:invalid[focused="true"] ~ .errorMessage {
+  display: block;
+}
