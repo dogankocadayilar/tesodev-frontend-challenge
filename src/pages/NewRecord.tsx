@@ -45,7 +45,7 @@ function NewRecord() {
       setisDisabled(true);
 
       axios
-        .get(`http://tinyurl.com/api-create.php?url=${formValues.website}`)
+        .get(`https://tinyurl.com/api-create.php?url=${formValues.website}`)
         .then((response) => {
           // Saving new record to local storage after trying to shorten website url
           const newRecord = {
