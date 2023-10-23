@@ -24,7 +24,7 @@ function Input(props: InputProps) {
         {...inputProps}
         onChange={onChange}
         onBlur={handleBlur}
-        focused={focused.toString()}
+        data-focused={focused.toString()}
         className="outline-none w-full border-2 border-gray-400 indent-1 p-2 rounded-lg hover:bg-gray-100 focus:bg-gray-100 transition-colors placeholder:font-semibold formInput"
         required
       />

@@ -32,13 +32,12 @@ export function getFilteredRecords(
   if (query.trim().length === 0) return [];
   const storedRecords = localStorage.getItem("records");
   const addedRecords: Record[] = storedRecords ? JSON.parse(storedRecords) : [];
-  const rc = records
-    .concat(addedRecords)
-    .filter((item) =>
-      KEYS.some((key) =>
-        item[key].toLowerCase().includes(query.toLocaleLowerCase().trim())
-      )
-    );
+  const rc = records.concat(addedRecords).filter((item) =>
+    KEYS.some((key) =>
+      // @ts-ignore
+      item[key].toLowerCase().includes(query.toLocaleLowerCase().trim())
+    )
+  );
 
   return numOfRecords
     ? sortedArray(rc, sortingMode).splice(0, numOfRecords)

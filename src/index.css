@@ -10,14 +10,14 @@
   display: none;
 }
 
-.formInput:invalid[focused="true"] {
+.formInput:invalid[data-focused="true"] {
   @apply border-red-500;
 }
 
-.inputLabel:has(~ .formInput:invalid[focused="true"]) {
+.inputLabel:has(~ .formInput:invalid[data-focused="true"]) {
   @apply text-red-500;
 }
 
-.formInput:invalid[focused="true"] ~ .errorMessage {
+.formInput:invalid[data-focused="true"] ~ .errorMessage {
   display: block;
 }
